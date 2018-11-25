@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>ML Presentation 2 - Craig Kilgo</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/league.css">
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<script src="env.js"></script>
+
+		<!-- Printing and PDF exports -->
+<script></script>
+
+		<style>
+.button {
+  position: relative;
+  padding: 14px 0;
+  border: 1px #13DAEC solid;
+  color: #13DAEC;
+  cursor: pointer;
+  font-size: 0.9em;
+  background-color: #363636;
+  transition: color 0.4s, background-color 0.4s;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1em;
+  outline: none;
+  text-align: center;
+  text-decoration: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 210px;
+  top: 50%;
+  left: 50%;
+  margin: 0 -125px;
+  width: 250px;
+}
+.button:hover, .button:focus {
+  transition: color 0.4s, background-color 0.4s;
+  color: #fff;
+  text-decoration: none;
+  background-color: #13DAEC;
+}
+input{
+  display: inline-block;
+  margin: 1em auto;
+  padding: 0.5em 0.25em;
+  border: none;
+  border-radius: 0.2em;
+  /*font-size: 1em;*/
+  box-shadow: 0 0 1em 0.25em rgba(0,0,0,0.2);
+  width:240px;
+}
+button{
+	display: inline-block;
+  margin: 1em auto;
+  padding: 0.5em 0.25em;
+  border: none;
+  border-radius: 0.2em;
+  box-shadow: 0 0 1em 0.25em rgba(0,0,0,0.2);
+}
+#results{
+	background-color:rgba(0, 0, 0, 0.322);
+	border-radius: 3px;
+	border-style: solid;
+	border-width:1px;
+	border-color: rgba(0, 0, 0, 0.622);
+	min-width:500px;
+	min-height:300px;
+}
+#json{
+	text-align: left;
+}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+					<section>
+							<h3>Project 2</h3>
+							<p style="color:#13DAEC;">Security Applications of Natural Language Processing</p>
+							<p>Craig Kilgo (INFO 644)</p>
+						</section>
+				<section>
+					<h2>Problem</h2>
+					<div>Detect "phishing" attempts by looking at URLs.</div>
+					<p><img class="plain" style="max-height:50%;width:auto;" src="img/phishing_login.png"></p>
+				</section>
+				<section>
+						<h2>Corpus</h2>
+						<div style="float:left;">PhishTank
+						<p><img class="plain" style="max-height:250px;width:auto;" src="img/phishtank1.png"></p></div>
+						<div>Moz.com
+						<p><img class="plain" style="max-height:250px;width:auto;" src="img/moz_top500.png"></p></div>
+				</section>
+				<section>
+						<h2>Corpus - Known Bad</h2>
+						<div>PhishTank</div>
+						<ul>
+							<li>List of known phishing attempts</li>
+							<li>https://cposerst.000webhostapp.com/secure_help.htm</li>
+							<li>23,364 records</li>
+						</ul>
+				</section>
+				<section>
+						<h2>Corpus - Known Good</h2>
+						<div>Moz.com Top 500</div>
+						<ul>
+							<li>Good list of credible URLs (compare to Alexa)</li>
+							<li>Just domains</li>
+							<li>facebook.com</li>
+						</ul>
+				</section>
+				<section>
+						<h2>Corpus - Known Good</h2>
+						<div>Created Bash Script to crawl each of the top 500 domains and extract all links</div>
+						<p><img class="plain" style="max-height:50%;width:auto;" src="img/bash_ss.png"></p>
+				</section>
+				<section>
+						<h2>Corpus - Known Bad</h2>
+						<div>Created some "synthetic" bad URLs</div>
+						<p>Used the good URLs:</p>
+						<ul>
+							<li>Replaced some "o" with "0"</li>
+							<li>Replaced some "a" with "&alpha;"</li>
+						</ul>
+				</section>
+				<section>
+						<h2>Training and Testing</h2>
+						<ul>
+						<li>Used random selection to split the entire dataset into a training and testing set</li>
+						<li>Testing set was roughly 33% of the entire sample</li>
+					</ul>
+				</section>
+				<section>
+						<h2>Created Model</h2>
+							<img src="img/ms_ss.png">
+
+				</section>
+				<section>
+					<h2><i>FastTree</i> &nbsp; Binary Classification</h2>
+					<h4>Multiple Additive Regression Trees with Dropouts</h4>
+					<p><ul>
+						<li>Multiple decision trees are assembled, with some "dropped"</li>
+						<li>Fast</li>
+						<li>Designed to provide good results while avoiding overfitting</li>
+					</ul></p>
+				</section>
+				<section>
+						<span><img class="plain" src="img/ubuntu_terminal_ss.png"></span>
+				</section>
+				<section>
+						<h2>Model Results</h2>
+						<table>
+							<thead>
+								<tr>
+									<th>Metric</th>
+									<th>Value</th>
+								</tr>
+							</thead>
+							<tbody>
+									<tr>
+										<td>Accuracy</td>
+										<td>0.970</td>
+									</tr>
+									<tr>
+										<td>Recall</td>
+										<td>0.948</td>
+									</tr>
+									<tr>
+											<td>Precision</td>
+											<td>0.974</td>
+										</tr>
+										<tr>
+												<td>AUC</td>
+												<td>0.996</td>
+											</tr>
+										<tr>
+												<td>F-measure</td>
+												<td>0.961</td>
+											</tr>
+							</tbody>
+						</table>
+				</section>
+				<section>
+						<h2>Model Usage</h2>
+					
+				
+						<div id="results">
+						<input type="text"> <button>Predict</button><br>
+							Results:<br>
+						<div id="json">
+							<pre><code id="code">
+{
+	"url": "facebook.com/news",
+	"prediction": "Not Phish",
+	"probability": 0.0091754775494337082
+}
+		</code></pre>
+						</div>
+						</div>
+					
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				// Transition style
+				transition: 'convex', // none/fade/slide/convex/concave/zoom
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+
+		</script>
+	</body>
+</html>
