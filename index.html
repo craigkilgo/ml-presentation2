@@ -83,6 +83,10 @@ button{
 #json{
 	text-align: left;
 }
+.key{
+	padding:10px;
+	color:crimson;
+}
 		</style>
 	</head>
 	<body>
@@ -201,15 +205,11 @@ button{
 						<div id="results">
 						<input type="text" id="url"> <button id="predictBtn">Predict</button><br>
 							Results:<br>
-						<div id="json">
-							<pre><code id="code">
-{
-	"url": "facebook.com/news",
-	"prediction": "Not Phish",
-	"probability": 0.0091754775494337082
-}
-		</code></pre>
-						</div>
+							<div id="json">
+									<span class="key">url:</span> &nbsp;<span id="resultUrl"></span><br>
+									<span class="key">prediction:</span> &nbsp;<span id="resultPred"></span><br>
+									<span class="key">probability:</span> &nbsp;<span id="resultProb"></span><br>
+							</div>
 						</div>
 
 				</section>
@@ -226,18 +226,22 @@ button{
 			document.getElementById('predictBtn').addEventListener('click', function(e){
 				console.log('clicked');
 				var url = "http://ml2-api.craigkilgo.com/api/phish";
-				var predictionUrl = "facebook.com/news";
+				var predictionUrl = document.getElementById('url').value;
 
 				var headers = new Headers();
 				headers.append('Content-Type', 'application/json');
 
 				fetch(url,{   method: "POST",
 								headers:headers,
-								body: {predictionUrl}
+								body: JSON.stringify(predictionUrl)
 								}).then(function(response) { return response.json(); })
 					.then(function(j) {
 						// Yay, `j` is a JavaScript object
-						console.log(j.body);
+
+						document.getElementById('resultUrl').innerHTML = j.url;
+						document.getElementById('resultPred').innerHTML = j.prediction;
+						document.getElementById('resultProb').innerHTML = j.probability;
+
 					});
 			});
 
