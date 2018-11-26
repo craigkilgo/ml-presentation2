@@ -233,7 +233,7 @@ button{
 
 				fetch(url,{   method: "POST",
 								headers:headers,
-								body: predictionUrl
+								body: {predictionUrl}
 								}).then(function(response) { return response.json(); })
 					.then(function(j) {
 						// Yay, `j` is a JavaScript object
