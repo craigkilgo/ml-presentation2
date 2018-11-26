@@ -196,10 +196,10 @@ button{
 				</section>
 				<section>
 						<h2>Model Usage</h2>
-					
-				
+
+
 						<div id="results">
-						<input type="text"> <button>Predict</button><br>
+						<input type="text" id="url"> <button id="predictBtn">Predict</button><br>
 							Results:<br>
 						<div id="json">
 							<pre><code id="code">
@@ -211,7 +211,7 @@ button{
 		</code></pre>
 						</div>
 						</div>
-					
+
 				</section>
 			</div>
 		</div>
@@ -223,6 +223,24 @@ button{
 			// More info about config & dependencies:
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
+			document.getElementById('predictBtn').addEventListener('click', function(e){
+				console.log('clicked');
+				var url = "http://ml2-api.craigkilgo.com/api/phish";
+				var predictionUrl = "facebook.com/news";
+
+				var headers = new Headers();
+				headers.append('Content-Type', 'application/json');
+
+				fetch(url,{   method: "POST",
+								headers:headers,
+								body: predictionUrl
+								}).then(function(response) { return response.json(); })
+					.then(function(j) {
+						// Yay, `j` is a JavaScript object
+						console.log(j.body);
+					});
+			});
+
 			Reveal.initialize({
 				// Transition style
 				transition: 'convex', // none/fade/slide/convex/concave/zoom
